@@ -28,12 +28,10 @@ const startServer = (port = process.env.PORT || process.env.DEFAULT_PORT): Promi
 
 	app.use(expressRequestId());
 
-	/* BODY PARSER */
 	app.use(express.json());
 	app.use(express.urlencoded({ extended: false }));
 	app.use(express.text());
 	app.use(express.raw());
-	/* BODY PARSER */
 
 	app.use(compression());
 
