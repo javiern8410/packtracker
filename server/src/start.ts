@@ -10,6 +10,9 @@ import logger from 'loglevel';
 import path from 'path';
 
 import { closeDB } from '../config/mongo';
+import { getRoutes } from './controller';
+import errorMiddleware from './middleware/error';
+import notFound from './middleware/notFound';
 dotenv.config();
 
 process.env.DEFAULT_PORT = '4000';
@@ -35,6 +38,11 @@ const startServer = (port = process.env.PORT || process.env.DEFAULT_PORT): Promi
 	app.use(compression());
 
 	app.use(cookieParser());
+
+	//routes
+	app.use('/', getRoutes());
+	app.use(errorMiddleware);
+	app.use(notFound);
 
 	return new Promise((resolve) => {
 		const server: any = app.listen(port, () => {
