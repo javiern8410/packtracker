@@ -15,22 +15,30 @@ const Search = ({ action }: ISearchProps) => {
 	return (
 		<>
 			<div className="w-full">
-				<div className="bg-white w-full shadow-md rounded px-8 pt-6 pb-8 mb-4">
-					<div className="mb-4 grid sm:flex gap-3 justify-center">
+				<div className="bg-white w-full flex justify-center items-center min-h-12 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+					<div className="input-group w-full sm:w-1/2 ">
 						<input
-							className="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-							id="id"
-							type="text"
-							placeholder="Insert pack code"
+							value={code}
 							onChange={handleChange}
+							type="text"
+							placeholder="Ingrese el número de rastreo"
+							className="input input-bordered w-full focus:border-spacing-0 focus:outline-none"
 						/>
-						<button
-							className="bg-blue-500 disabled:bg-slate-200 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-							type="button"
-							disabled={!code}
-							onClick={() => action(code)}
-						>
-							Search
+						<button className="btn btn-square" disabled={!code} onClick={() => action(code)}>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								className="h-6 w-6"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke="currentColor"
+							>
+								<path
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									strokeWidth="2"
+									d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+								/>
+							</svg>
 						</button>
 					</div>
 				</div>
