@@ -24,3 +24,4 @@ coverage
 server/public/dist
 server/node_modules
 server/sensitive.conf
+server/.env
