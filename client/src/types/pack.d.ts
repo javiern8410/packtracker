@@ -1,13 +1,14 @@
 export interface IPack {
-	created: Date;
+	id?: string;
+	created?: Date;
 	package: string;
 	email: string;
 	from: string;
 	to: string;
-	current: string;
+	current?: string;
 	weight: number;
 	description: string;
 	state: string;
-	delivered: boolean;
-	deliveredDate: Date;
+	delivered?: boolean;
+	deliveredDate?: Date;
 }

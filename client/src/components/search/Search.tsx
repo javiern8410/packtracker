@@ -4,7 +4,7 @@ interface ISearchProps {
 	action: Function;
 }
 const Search = ({ action }: ISearchProps) => {
-	const [code, setCode] = useState('');
+	const [code, setCode] = useState('63e5ce421a55ed0ac80bc3ce');
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value } = e.target;
