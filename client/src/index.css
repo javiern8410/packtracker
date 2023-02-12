@@ -15,6 +15,12 @@
   -webkit-text-size-adjust: 100%;
 }
 
+.logged {
+  background-color: #5a5a93;
+  border-radius: 17px;
+  border: 2px solid #0028ee;
+}
+
 [data-placeholder]::after {
   content: " ";
   box-shadow: 0 0 50px 9px rgba(254,254,254);

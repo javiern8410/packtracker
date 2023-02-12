@@ -1,3 +1,5 @@
+import { STATUS_ENUM } from '../constants/app.constants';
+
 export interface IPack {
 	id?: string;
 	created?: Date;
@@ -8,7 +10,6 @@ export interface IPack {
 	current?: string;
 	weight: number;
 	description: string;
-	state: string;
-	delivered?: boolean;
-	deliveredDate?: Date;
+	state: STATUS_ENUM;
+	deliveredDate?: Date | string | number;
 }

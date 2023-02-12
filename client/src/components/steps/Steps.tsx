@@ -1,27 +1,25 @@
 import React from 'react';
 
+import { STATUS_ENUM } from '../../constants/app.constants';
 import { IPack } from '../../types/pack';
 interface IStepsProps {
 	data: IPack;
 }
 const Steps = ({ data }: IStepsProps) => {
-	const { current } = data;
-
 	return (
-		<div>
-			<ul className="steps">
-				<li className="step">{data.from}</li>
-				<li className="step">{data.to}</li>
-				<li className="step">{data.to}</li>
-				<li className="step">Entregado</li>
-			</ul>
-			{/* <ul className="steps sm:steps-vertical">
-				<li className="step step-primary">Register</li>
-				<li className="step step-primary">Choose plan</li>
-				<li className="step">Purchase</li>
-				<li className="step">Receive Product</li>
-			</ul> */}
-		</div>
+		<ul className="steps w-full">
+			<li className={`step ${data.state === STATUS_ENUM.RECEIVED ? 'step-primary' : ''}`}>
+				{data.from}
+			</li>
+			{data.current && (
+				<li className={`step ${data.state === STATUS_ENUM.WAY ? 'step-primary' : ''}`}>
+					{data.current}
+				</li>
+			)}
+			<li className={`step ${data.state === STATUS_ENUM.DELIVERED ? 'step-primary' : ''}`}>
+				{data.to}
+			</li>
+		</ul>
 	);
 };
 

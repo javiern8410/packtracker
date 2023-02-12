@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
+
+import { STATUS_ENUM, STATUS_TRANSLATIONS } from '../../constants/app.constants';
+import { IPack } from '../../types/pack';
 interface IAddFormProps {
 	onFinish: Function;
+	data: IPack;
 }
 
-const AddForm = ({ onFinish }: IAddFormProps) => {
+const EditForm = ({ onFinish, data }: IAddFormProps) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
 
-	const addPackage = async (e: any) => {
+	const editPackage = async (e: any) => {
 		e.preventDefault();
-		const entries: any = {};
+		const entries: IPack | any = {};
 
 		new FormData(e.target).forEach((value, key) => {
 			try {
@@ -23,15 +27,15 @@ const AddForm = ({ onFinish }: IAddFormProps) => {
 			setLoading(true);
 			setError(false);
 
-			const response = await fetch('http://localhost:4000/api/packs/', {
-				method: 'POST',
+			const response = await fetch(`http://localhost:4000/api/packs/${data.id}`, {
+				method: 'PUT',
 				body: JSON.stringify(entries),
 				headers: {
 					'Content-Type': 'application/json'
 				}
 			});
 
-			if (response.status != 201) {
+			if (response.status != 200) {
 				setError(true);
 			} else {
 				onFinish();
@@ -45,7 +49,7 @@ const AddForm = ({ onFinish }: IAddFormProps) => {
 
 	return (
 		<div>
-			<form id="addForm" method="POST" onSubmit={addPackage}>
+			<form id="addForm" method="POST" onSubmit={editPackage}>
 				<div className="form-control w-full">
 					<label className="label">
 						<span className="label-text">Nombre del paquete</span>
@@ -56,6 +60,7 @@ const AddForm = ({ onFinish }: IAddFormProps) => {
 						placeholder="Nombre"
 						required
 						className="input input-sm input-bordered w-full"
+						defaultValue={data.package}
 					/>
 				</div>
 				<div className="form-control w-full">
@@ -66,7 +71,7 @@ const AddForm = ({ onFinish }: IAddFormProps) => {
 						name="description"
 						placeholder="Descripción"
 						className="textarea textarea-bordered textarea-md w-full"
-						required
+						defaultValue={data.description}
 					></textarea>
 				</div>
 				<div className="form-control w-full">
@@ -76,22 +81,22 @@ const AddForm = ({ onFinish }: IAddFormProps) => {
 					<input
 						type="email"
 						name="email"
-						required
 						placeholder="Email"
 						className="input input-sm input-bordered w-full"
+						defaultValue={data.email}
 					/>
 				</div>
 				<div className="flex gap-3">
 					<div className="form-control w-full">
 						<label className="label">
-							<span className="label-text">Lugar de entrega</span>
+							<span className="label-text">Lugar de origen</span>
 						</label>
 						<input
 							type="text"
-							placeholder="Entrega"
+							placeholder="Origen"
 							name="from"
-							required
 							className="input input-sm input-bordered w-full"
+							defaultValue={data.from}
 						/>
 					</div>
 					<div className="form-control w-full">
@@ -104,9 +109,23 @@ const AddForm = ({ onFinish }: IAddFormProps) => {
 							name="to"
 							required
 							className="input input-sm input-bordered w-full"
+							defaultValue={data.to}
 						/>
 					</div>
 				</div>
+				<div className="form-control w-full">
+					<label className="label">
+						<span className="label-text">Ubicación actual</span>
+					</label>
+					<input
+						type="text"
+						placeholder="Ubicación actual"
+						name="current"
+						className="input input-sm input-bordered w-full"
+						defaultValue={data.current}
+					/>
+				</div>
+
 				<div className="form-control w-full">
 					<label className="label">
 						<span className="label-text">Peso en Kgs</span>
@@ -117,11 +136,28 @@ const AddForm = ({ onFinish }: IAddFormProps) => {
 						name="weight"
 						placeholder="Peso"
 						className="input input-sm input-bordered w-full"
+						defaultValue={data.weight}
 					/>
+				</div>
+				<div className="form-control w-full">
+					<label className="label">
+						<span className="label-text">Estado</span>
+					</label>
+					<select
+						name="state"
+						className="select select-bordered select-sm w-full"
+						defaultValue={data.state}
+					>
+						{Object.values(STATUS_ENUM).map((option) => (
+							<option key={option} value={option}>
+								{STATUS_TRANSLATIONS[option]}
+							</option>
+						))}
+					</select>
 				</div>
 
 				<button disabled={loading} className={`btn my-3 w-full ${loading ? 'loading' : ''}`}>
-					Agregar
+					Guardar
 				</button>
 				{error && (
 					<div className="alert alert-error shadow-lg">
@@ -140,7 +176,7 @@ const AddForm = ({ onFinish }: IAddFormProps) => {
 									d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
 								/>
 							</svg>
-							<span>Error al agregar el paquete!.</span>
+							<span>Error al editar el paquete!.</span>
 						</div>
 					</div>
 				)}
@@ -149,4 +185,4 @@ const AddForm = ({ onFinish }: IAddFormProps) => {
 	);
 };
 
-export default AddForm;
+export default EditForm;
