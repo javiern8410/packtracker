@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response, Router } from 'express';
 import logger from 'loglevel';
 
 import Pack from '../../../config/mongo/models/pack';
+import { STATUS_ENUM } from '../../../constants/app.constants';
 import { IPack } from '../../../types/pack';
 
 const packsRoutes = (): Router => {
@@ -63,16 +64,19 @@ const packsRoutes = (): Router => {
 		const { id } = req.params;
 		const pack = req.body as IPack;
 
-		const newpackData = {
+		const newPack = {
+			package: pack.package,
+			description: pack.description,
+			email: pack.email,
 			state: pack.state,
-			delivered: pack.delivered,
 			from: pack.from,
 			to: pack.to,
+			weight: pack.weight,
 			current: pack.current,
-			...(!!pack.delivered && { deliveredDate: new Date() })
+			...(pack.state == STATUS_ENUM.DELIVERED && { deliveredDate: new Date() })
 		};
 
-		Pack.findByIdAndUpdate(id, newpackData, { new: true })
+		Pack.findByIdAndUpdate(id, newPack, { new: true })
 			.then((result) => {
 				logger.info(result);
 				res.json(result);

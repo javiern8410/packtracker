@@ -1,5 +1,7 @@
 import { model, Schema } from 'mongoose';
 
+import { STATUS_ENUM } from '../../../constants/app.constants';
+
 const PackSchema = new Schema({
 	created: {
 		type: Date,
@@ -12,10 +14,9 @@ const PackSchema = new Schema({
 	current: String,
 	weight: Number,
 	description: String,
-	state: String,
-	delivered: {
-		type: Boolean,
-		default: false
+	state: {
+		type: String,
+		default: STATUS_ENUM.RECEIVED
 	},
 	deliveredDate: {
 		type: Date,

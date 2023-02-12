@@ -8,6 +8,5 @@ export interface IPack {
 	weight: number;
 	description: string;
 	state: string;
-	delivered: boolean;
 	deliveredDate: Date;
 }
