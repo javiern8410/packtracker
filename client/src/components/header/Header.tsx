@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import DashIcon from '../../assets/dash.svg';
 import Logo from '../../assets/logo.svg';
+import { BACKEND_URL } from '../../constants/app.constants';
 import { IUser } from '../../types/user';
 
 interface IHeaderProps {
@@ -32,7 +33,7 @@ const Header = ({ setPage, setUser, user }: IHeaderProps) => {
 		try {
 			setError(false);
 			setLoading(true);
-			const response = await fetch(`http://localhost:4000/api/login`, {
+			const response = await fetch(`${BACKEND_URL}login`, {
 				method: 'POST',
 				body: JSON.stringify({
 					username,

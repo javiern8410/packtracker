@@ -6,7 +6,7 @@ import Edit from '../assets/edit.svg';
 import AddForm from '../components/forms/AddForm';
 import EditForm from '../components/forms/EditForm';
 import Loading, { SimpleSkeleton } from '../components/loading/Loading';
-import { STATUS_TRANSLATIONS } from '../constants/app.constants';
+import { BACKEND_URL, STATUS_TRANSLATIONS } from '../constants/app.constants';
 import { IPack } from '../types/pack';
 import { IReports } from '../types/reports';
 import { getStateClass } from '../utils';
@@ -20,8 +20,7 @@ const Dashboard = () => {
 	const [deleteId, setDeleteId] = useState('');
 
 	const fetcher = useCallback(
-		async (): Promise<IPack[]> =>
-			fetch(`http://localhost:4000/api/packs/`).then((res) => res.json()),
+		async (): Promise<IPack[]> => fetch(`${BACKEND_URL}packs/`).then((res) => res.json()),
 		[]
 	);
 
@@ -30,8 +29,7 @@ const Dashboard = () => {
 	});
 
 	const metricsFetcher = useCallback(
-		async (): Promise<IReports> =>
-			fetch(`http://localhost:4000/api/reports/`).then((res) => res.json()),
+		async (): Promise<IReports> => fetch(`${BACKEND_URL}reports/`).then((res) => res.json()),
 		[]
 	);
 
@@ -47,7 +45,7 @@ const Dashboard = () => {
 		const update = data?.filter((pack) => pack.id != deleteId);
 
 		mutate(update, false);
-		fetch(`http://localhost:4000/api/packs/${deleteId}`, {
+		fetch(`${BACKEND_URL}packs/${deleteId}`, {
 			method: 'DELETE'
 		});
 		setShowDeleteModal(false);

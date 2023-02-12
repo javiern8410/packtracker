@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+
+import { BACKEND_URL } from '../../constants/app.constants';
 interface IAddFormProps {
 	onFinish: Function;
 }
@@ -23,7 +25,7 @@ const AddForm = ({ onFinish }: IAddFormProps) => {
 			setLoading(true);
 			setError(false);
 
-			const response = await fetch('http://localhost:4000/api/packs/', {
+			const response = await fetch(`${BACKEND_URL}packs/`, {
 				method: 'POST',
 				body: JSON.stringify(entries),
 				headers: {

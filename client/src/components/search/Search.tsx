@@ -22,6 +22,7 @@ const Search = ({ action, id = '' }: ISearchProps) => {
 							value={code}
 							onChange={handleChange}
 							type="text"
+							data-testid="search"
 							placeholder="Ingrese el número de rastreo"
 							className="input input-bordered w-full focus:border-spacing-0 focus:outline-none"
 						/>

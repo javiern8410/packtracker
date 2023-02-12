@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { STATUS_ENUM, STATUS_TRANSLATIONS } from '../../constants/app.constants';
+import { BACKEND_URL, STATUS_ENUM, STATUS_TRANSLATIONS } from '../../constants/app.constants';
 import { IPack } from '../../types/pack';
 interface IAddFormProps {
 	onFinish: Function;
@@ -31,7 +31,7 @@ const EditForm = ({ onFinish, data }: IAddFormProps) => {
 				delete entries.state;
 			}
 
-			const response = await fetch(`http://localhost:4000/api/packs/${data.id}`, {
+			const response = await fetch(`${BACKEND_URL}packs/${data.id}`, {
 				method: 'PUT',
 				body: JSON.stringify(entries),
 				headers: {

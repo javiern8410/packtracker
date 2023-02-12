@@ -9,3 +9,5 @@ export const STATUS_TRANSLATIONS = {
 	[STATUS_ENUM.WAY]: 'En camino',
 	[STATUS_ENUM.DELIVERED]: 'Entregado'
 };
+
+export const BACKEND_URL = 'http://localhost:4000/api/';

@@ -5,6 +5,7 @@ import Container from '../components/container/Container';
 import Loading from '../components/loading/Loading';
 import PackCard from '../components/pack/PackCard';
 import Search from '../components/search/Search';
+import { BACKEND_URL } from '../constants/app.constants';
 import { IPack } from '../types/pack';
 interface IHomeProps {
 	id?: string;
@@ -12,8 +13,7 @@ interface IHomeProps {
 const Home = ({ id }: IHomeProps) => {
 	const [code, setCode] = useState(id || '');
 	const fetcher = useCallback(
-		async (): Promise<IPack> =>
-			fetch(`http://localhost:4000/api/packs/${code}`).then((res) => res.json()),
+		async (): Promise<IPack> => fetch(`${BACKEND_URL}packs/${code}`).then((res) => res.json()),
 		[code]
 	);
 
