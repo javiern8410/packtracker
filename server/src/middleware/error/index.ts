@@ -12,15 +12,23 @@ const errorMiddleware = (error: Error, _: Request, res: Response, next: NextFunc
 		next(error);
 	} else {
 		logger.error(error);
+		let code = 200;
+		let message = '';
+
 		if (error.name === 'CastError') {
 			logger.error({ message: 'Id used is invalid' });
-			res.status(400).send('Id used is invalid');
-		} else {
-			res.status(500).json({
-				message: error.message,
-				...(process.env.NODE_ENV === 'production' ? null : { stack: error.stack })
-			});
+			code = 400;
+			message = 'Id used is invalid';
 		}
+		message = error.message;
+
+		if (process.env.NODE_ENV === 'production') {
+			logger.error(error.stack);
+		}
+
+		res.status(code).json({
+			message: message
+		});
 	}
 };
 
