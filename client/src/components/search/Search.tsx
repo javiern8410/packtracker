@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 
 interface ISearchProps {
 	action: Function;
+	id?: string;
 }
-const Search = ({ action }: ISearchProps) => {
-	const [code, setCode] = useState('63e5ce421a55ed0ac80bc3ce');
+const Search = ({ action, id = '' }: ISearchProps) => {
+	const [code, setCode] = useState(id);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value } = e.target;

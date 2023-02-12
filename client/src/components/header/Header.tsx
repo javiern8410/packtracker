@@ -1,8 +1,7 @@
-import React, { useCallback, useState } from 'react';
-import useSWR from 'swr';
+import React, { useState } from 'react';
 
+import DashIcon from '../../assets/dash.svg';
 import Logo from '../../assets/logo.svg';
-import User from '../../assets/user.svg';
 import { IUser } from '../../types/user';
 
 interface IHeaderProps {
@@ -23,6 +22,9 @@ const Header = ({ setPage, setUser, user }: IHeaderProps) => {
 			setPage('dashboard');
 		} else {
 			setUserModal(true);
+			setUsername('');
+			setPassword('');
+			setError(false);
 		}
 	};
 
@@ -61,12 +63,12 @@ const Header = ({ setPage, setUser, user }: IHeaderProps) => {
 		<div className="flex gap-3 items-center justify-between mb-8">
 			<div className="flex items-center cursor-pointer" onClick={() => setPage('home')}>
 				<img src={Logo} className={`inline mr-4 w-16 aspect-square`} alt="Pack Tracker" />
-				<span className="text-2xl sm:text-3xl font-bold">Pack Tracker</span>
+				<span className="text-lg sm:text-3xl font-bold">Dealergeek Tracker</span>
 			</div>
 			<div>
 				<img
-					src={User}
-					className={`w-16 rounded-xl aspect-square cursor-pointer ${user ? 'bg-blue-500' : ''}`}
+					src={DashIcon}
+					className={`w-12 rounded-xl aspect-square cursor-pointer`}
 					alt="Dashboard"
 					onClick={() => handlePage()}
 				/>
@@ -83,6 +85,7 @@ const Header = ({ setPage, setUser, user }: IHeaderProps) => {
 							required
 							name="username"
 							placeholder="Usuario"
+							value={username}
 							onChange={(e) => setUsername(e.target.value)}
 							className="input input-sm input-bordered w-full"
 						/>
@@ -96,6 +99,7 @@ const Header = ({ setPage, setUser, user }: IHeaderProps) => {
 							required
 							name="password"
 							placeholder="Contraseña"
+							value={password}
 							onChange={(e) => setPassword(e.target.value)}
 							className="input input-sm input-bordered w-full"
 						/>
@@ -103,7 +107,7 @@ const Header = ({ setPage, setUser, user }: IHeaderProps) => {
 					<div className="modal-action">
 						<button
 							className={`btn ${loading ? 'loading' : ''}`}
-							disabled={loading}
+							disabled={loading || !username || !password}
 							onClick={() => login()}
 						>
 							Confirmar

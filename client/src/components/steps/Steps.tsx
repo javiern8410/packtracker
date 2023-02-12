@@ -8,10 +8,17 @@ interface IStepsProps {
 const Steps = ({ data }: IStepsProps) => {
 	return (
 		<ul className="steps w-full">
-			<li className={`step ${data.state === STATUS_ENUM.RECEIVED ? 'step-primary' : ''}`}>
+			<li
+				className={`step ${
+					data.state === STATUS_ENUM.RECEIVED ||
+					(data.state === STATUS_ENUM.WAY && data.from === data.current)
+						? 'step-primary'
+						: ''
+				}`}
+			>
 				{data.from}
 			</li>
-			{data.current && (
+			{data.current && data.current != data.from && data.current != data.to && (
 				<li className={`step ${data.state === STATUS_ENUM.WAY ? 'step-primary' : ''}`}>
 					{data.current}
 				</li>

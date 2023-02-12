@@ -27,6 +27,10 @@ const EditForm = ({ onFinish, data }: IAddFormProps) => {
 			setLoading(true);
 			setError(false);
 
+			if (data.state === entries['state']) {
+				delete entries.state;
+			}
+
 			const response = await fetch(`http://localhost:4000/api/packs/${data.id}`, {
 				method: 'PUT',
 				body: JSON.stringify(entries),

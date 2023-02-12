@@ -137,6 +137,7 @@ const Dashboard = () => {
 							<thead>
 								<tr>
 									<th></th>
+									<th className="w-[120px]">Código</th>
 									<th>Paquete</th>
 									<th>Estado</th>
 									<th>Origen</th>
@@ -160,6 +161,7 @@ const Dashboard = () => {
 												/>
 											</div>
 										</th>
+										<td> {element.id} </td>
 										<td> {element.package} </td>
 										<td>
 											<div className={`badge ${getStateClass(element.state)}`}>

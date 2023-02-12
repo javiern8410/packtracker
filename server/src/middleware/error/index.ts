@@ -13,13 +13,14 @@ const errorMiddleware = (error: Error, _: Request, res: Response, next: NextFunc
 	} else {
 		logger.error(error);
 		if (error.name === 'CastError') {
-			res.status(400).json({ message: 'Id used is invalid' });
+			logger.error({ message: 'Id used is invalid' });
+			res.status(400).send('Id used is invalid');
+		} else {
+			res.status(500).json({
+				message: error.message,
+				...(process.env.NODE_ENV === 'production' ? null : { stack: error.stack })
+			});
 		}
-
-		res.status(500).json({
-			message: error.message,
-			...(process.env.NODE_ENV === 'production' ? null : { stack: error.stack })
-		});
 	}
 };
 

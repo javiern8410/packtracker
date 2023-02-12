@@ -20,7 +20,6 @@ const getLoginApi = (): Router => {
 				if (!validPassword) {
 					res.status(400).send({ error: 'Incorrect Username or password' });
 				}
-				logger.info(result);
 				res.json({
 					login: 'OK',
 					error: null

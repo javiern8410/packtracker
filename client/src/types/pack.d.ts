@@ -10,6 +10,6 @@ export interface IPack {
 	current?: string;
 	weight: number;
 	description: string;
-	state: STATUS_ENUM;
+	state?: STATUS_ENUM;
 	deliveredDate?: Date | string | number;
 }

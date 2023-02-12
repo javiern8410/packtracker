@@ -6,16 +6,23 @@ import Loading from '../components/loading/Loading';
 import PackCard from '../components/pack/PackCard';
 import Search from '../components/search/Search';
 import { IPack } from '../types/pack';
-
-const Home = () => {
-	const [code, setCode] = useState('');
+interface IHomeProps {
+	id?: string;
+}
+const Home = ({ id }: IHomeProps) => {
+	const [code, setCode] = useState(id || '');
 	const fetcher = useCallback(
 		async (): Promise<IPack> =>
 			fetch(`http://localhost:4000/api/packs/${code}`).then((res) => res.json()),
 		[code]
 	);
 
-	const { data, error, isLoading } = useSWR(!code ? null : `api/packs/${code}`, fetcher);
+	const { data, error, isLoading } = useSWR(!code ? null : `api/packs/${code}`, fetcher, {
+		onErrorRetry: (error) => {
+			if (error.status === 404) return;
+			if (error.status === 400) return;
+		}
+	});
 
 	const getPackage = (code: string) => {
 		setCode(code);
@@ -23,7 +30,7 @@ const Home = () => {
 
 	return (
 		<>
-			<Search action={getPackage} />
+			<Search action={getPackage} id={id} />
 
 			{isLoading && <Loading />}
 
